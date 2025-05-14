@@ -1,6 +1,8 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
+import DetailPage from "./DetailPage"; // kita buat di langkah 3
 
-function App() {
+function Home() {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [bmi, setBmi] = useState(null);
@@ -8,7 +10,7 @@ function App() {
 
   const calculateBMI = () => {
     const w = parseFloat(weight);
-    const h = parseFloat(height) / 100; // konversi cm ke meter
+    const h = parseFloat(height) / 100;
     if (!w || !h) {
       setBmi(null);
       setCategory("Masukkan angka valid!");
@@ -65,7 +67,22 @@ function App() {
       {!bmi && category && (
         <p className="mt-6 text-red-500 font-semibold">{category}</p>
       )}
+
+      <Link to="/detail">
+        <button className="mt-6 text-blue-500 underline">Pelajari Hidup Sehat</button>
+      </Link>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/detail" element={<DetailPage />} />
+      </Routes>
+    </Router>
   );
 }
 
